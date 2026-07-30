@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Responsible AI Pledge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --maroon:#82212F;
+    --maroon-dark:#5C1826;
+    --maroon-light:#9E2B3D;
+    --navy:#1E345E;
+    --navy-dark:#16274A;
+    --gold:#1E345E;      /* kept as --gold for compat; now maps to navy accent */
+    --gold-light:#3A4F80;
+    --cream:#FBF6EE;
+    --card:#FFFFFF;
+    --hairline:#E4DED2;
+    --ink:#241419;
+    --muted:#867A72;
+    --green:#2F8F5B;
+    --red:#B23A3A;
+    --shadow: 0 30px 70px -25px rgba(30,52,94,0.30);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 12% -10%, rgba(199,154,69,0.16), transparent 42%),
+      radial-gradient(circle at 108% 20%, rgba(110,14,32,0.10), transparent 48%),
+      var(--cream);
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 56px 20px 80px;
+    overflow-x:hidden;
+  }
+
+  .wrap{ width:100%; max-width: 720px; position:relative; }
+
+  /* subtle floating academic-seal shapes in the background */
+  .wrap::before, .wrap::after{
+    content:"";
+    position:fixed;
+    border-radius:50%;
+    border:1.5px solid rgba(199,154,69,0.25);
+    pointer-events:none;
+    z-index:-1;
+    animation: float-slow 14s ease-in-out infinite;
+  }
+  .wrap::before{ width:220px; height:220px; top:8%; left:4%; animation-delay:0s; }
+  .wrap::after{ width:140px; height:140px; bottom:10%; right:6%; animation-delay:-6s; }
+  @keyframes float-slow{
+    0%,100%{ transform: translateY(0px) rotate(0deg); }
+    50%{ transform: translateY(-18px) rotate(8deg); }
+  }
+
+  @keyframes fadeInUp{
+    from{ opacity:0; transform: translateY(18px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
+  .logo-row{
+    display:flex; justify-content:center; margin-bottom:22px;
+    animation: fadeInUp .6s ease both;
+  }
+  .logo-row img{ height:60px; width:auto; max-width:100%; display:block; }
+  .logo-badge{
+    height:56px; padding:0 18px;
+    display:flex; align-items:center; justify-content:center;
+    border:1.5px solid var(--maroon);
+    border-radius:10px;
+    color:var(--maroon);
+    font-weight:700;
+    letter-spacing:0.08em;
+    font-size:14px;
+    background: linear-gradient(180deg, #fff, var(--cream));
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-optical-sizing:auto;
+    font-size:clamp(30px, 5vw, 44px);
+    line-height:1.1;
+    letter-spacing:-0.01em;
+    margin:0 0 12px;
+    text-align:center;
+    color:var(--maroon-dark);
+    animation: fadeInUp .6s ease .08s both;
+  }
+
+  .sub{
+    color:var(--muted);
+    text-align:center;
+    font-size:15px;
+    line-height:1.6;
+    max-width:520px;
+    margin:0 auto 40px;
+    animation: fadeInUp .6s ease .16s both;
+  }
+
+  .card{
+    position:relative;
+    background: var(--card);
+    border:1px solid var(--hairline);
+    border-radius:22px;
+    padding:38px 34px 32px;
+    box-shadow: var(--shadow);
+    overflow:hidden;
+    animation: fadeInUp .7s ease .22s both;
+  }
+  .card::before{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(199,154,69,0.07), transparent 30%);
+    pointer-events:none;
+  }
+  .card::after{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:5px;
+    background: linear-gradient(90deg, var(--maroon), var(--gold), var(--maroon));
+    background-size:200% 100%;
+    animation: shimmer-bar 6s linear infinite;
+  }
+  @keyframes shimmer-bar{ 0%{ background-position:0% 0; } 100%{ background-position:200% 0; } }
+
+  .pledge-list{ position:relative; z-index:1; list-style:none; margin:0 0 30px; padding:0; }
+  .pledge-item{
+    border-bottom:1px solid var(--hairline);
+    opacity:0; transform: translateY(10px);
+    animation: fadeInUp .5s ease forwards;
+  }
+  .pledge-item:nth-child(1){ animation-delay: .30s; }
+  .pledge-item:nth-child(2){ animation-delay: .38s; }
+  .pledge-item:nth-child(3){ animation-delay: .46s; }
+  .pledge-item:nth-child(4){ animation-delay: .54s; }
+  .pledge-item:nth-child(5){ animation-delay: .62s; }
+  .pledge-item:last-child{ border-bottom:none; }
+  .pledge-label{
+    display:flex; gap:16px; align-items:flex-start;
+    padding:16px 10px;
+    margin:0 -10px;
+    border-radius:12px;
+    cursor:pointer;
+    user-select:none;
+    transition: background .18s ease;
+  }
+  .pledge-label:hover{ background: rgba(199,154,69,0.08); }
+
+  .pledge-check{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  .stamp{
+    flex:0 0 26px; width:26px; height:26px; margin-top:2px;
+    border-radius:6px;
+    border:1.5px solid var(--gold);
+    background: var(--cream);
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    transition: transform .15s ease, border-color .2s ease, background .2s ease;
+  }
+  .stamp svg{
+    width:16px; height:16px;
+    opacity:0; transform: scale(0.5) rotate(-15deg);
+    transition: opacity .18s ease, transform .28s cubic-bezier(.34,1.56,.64,1);
+  }
+  .pledge-check:checked ~ .stamp{
+    border-color:var(--green);
+    background: rgba(47,143,91,0.12);
+  }
+  .pledge-check:checked ~ .stamp svg{ opacity:1; transform: scale(1) rotate(0deg); }
+  .pledge-check:focus-visible ~ .stamp{ outline:2px solid var(--maroon); outline-offset:2px; }
+  .pledge-label:active .stamp{ transform: scale(0.92); }
+
+  .pledge-text{ font-size:15.5px; line-height:1.55; padding-top:2px; }
+  .pledge-text b{ color:var(--maroon-dark); font-weight:600; }
+
+  .field-row{ display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin-bottom:22px; }
+  @media (max-width: 560px){ .field-row{ grid-template-columns: 1fr; } }
+
+  @media (max-width: 480px){
+    body{ padding: 40px 14px 60px; }
+    .card{ padding:30px 20px 26px; border-radius:18px; }
+    .foot-row{ flex-direction:column; align-items:stretch; }
+    .progress-wrap{ order:2; }
+    .progress-bar{ width:100%; }
+    .seal-btn{ order:1; width:100%; padding:15px 26px; }
+    .wrap::before{ width:120px; height:120px; }
+    .wrap::after{ width:90px; height:90px; }
+  }
+
+  .field label{
+    display:block; font-size:12px; letter-spacing:0.06em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:8px; font-weight:600;
+  }
+  .field input[type="text"]{
+    width:100%;
+    background: var(--cream);
+    border:1.5px solid var(--hairline);
+    border-radius:10px;
+    padding:12px 14px;
+    color:var(--ink);
+    font-family:'Space Grotesk', sans-serif;
+    font-size:15px;
+    outline:none;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .field input[type="text"]:focus{ border-color:var(--maroon); background:#fff; box-shadow:0 0 0 4px rgba(110,14,32,0.08); }
+  .field input[type="text"]::placeholder{ color:#B7A79C; }
+
+  .signature-preview{
+    text-align:center;
+    border-bottom:1.5px solid var(--hairline);
+    padding:22px 10px 14px;
+    margin-bottom:8px;
+    min-height:64px;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .ghost{
+    font-family:'Caveat', cursive;
+    font-size:34px;
+    color:#C8B9A6;
+  }
+  .ghost.live{ color:var(--maroon); animation: sig-pop .3s ease; }
+  @keyframes sig-pop{ from{ transform:scale(0.9); opacity:0.4; } to{ transform:scale(1); opacity:1; } }
+  .signature-caption{
+    text-align:center; font-size:12px; color:var(--muted);
+    letter-spacing:0.06em; text-transform:uppercase; margin:0 0 30px;
+  }
+
+  .foot-row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    flex-wrap:wrap;
+  }
+  .progress-wrap{ display:flex; flex-direction:column; gap:6px; }
+  .progress{ font-size:13.5px; color:var(--muted); }
+  .progress b{ color:var(--maroon); }
+  .progress-bar{
+    width:150px; height:5px; border-radius:3px;
+    background: var(--hairline);
+    overflow:hidden;
+  }
+  .progress-bar-fill{
+    height:100%; width:0%;
+    background: linear-gradient(90deg, var(--gold), var(--maroon));
+    border-radius:3px;
+    transition: width .35s cubic-bezier(.4,0,.2,1);
+  }
+
+  .seal-btn{
+    position:relative;
+    overflow:hidden;
+    background: linear-gradient(180deg, var(--maroon-light), var(--maroon-dark));
+    color:#FBF6EE;
+    border:none;
+    border-radius:12px;
+    padding:14px 26px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+    transition: transform .15s ease, opacity .2s ease, box-shadow .2s ease;
+    box-shadow: 0 10px 24px -8px rgba(110,14,32,0.45);
+  }
+  .seal-btn::before{
+    content:"";
+    position:absolute; top:0; left:-60%; width:40%; height:100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left .5s ease;
+  }
+  .seal-btn:hover:not(:disabled)::before{ left:130%; }
+  .seal-btn:hover:not(:disabled){ transform:translateY(-1px); }
+  .seal-btn:active:not(:disabled){ transform:translateY(0px) scale(0.98); }
+  .seal-btn:disabled{ opacity:0.35; cursor:not-allowed; box-shadow:none; }
+
+  .status-msg{ font-size:13.5px; margin:14px 2px 0; min-height:18px; }
+  .status-msg.error{ color:var(--red); }
+  .status-msg.info{ color:var(--muted); }
+
+  .sealed-overlay{
+    display:none;
+    flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:20px 10px 6px;
+  }
+  .card.is-sealed > *:not(.sealed-overlay){ display:none; }
+  .card.is-sealed .sealed-overlay{
+    display:flex;
+    animation: fadeInUp .45s ease both;
+  }
+  .seal-mark{
+    width:64px; height:64px; border-radius:50%;
+    border:2px solid var(--gold);
+    background: var(--maroon-dark);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:20px;
+    animation: seal-pop .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  .seal-mark svg{ width:30px; height:30px; }
+  @keyframes seal-pop{ 0%{ transform:scale(0) rotate(-30deg);} 100%{ transform:scale(1) rotate(0);} }
+  .sealed-title{ font-family:'Fraunces', serif; font-size:26px; font-weight:600; margin:0 0 10px; color:var(--maroon-dark); }
+  .sealed-sub{ color:var(--muted); font-size:14.5px; max-width:380px; line-height:1.6; margin:0 0 18px; }
+  .sealed-name{ font-family:'Caveat', cursive; font-size:30px; color:var(--maroon); margin:0 0 26px; }
+  .reset-link{
+    background:none; border:none; color:var(--muted);
+    text-decoration:underline; cursor:pointer; font-size:13px;
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .reset-link:hover{ color:var(--ink); }
+
+  footer{
+    text-align:center; color:#B7A79C; font-size:12px; margin-top:26px; line-height:1.6;
+    animation: fadeInUp .6s ease .7s both;
+  }
+  footer code{ color:var(--muted); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="logo-row" id="logoRow">
+    <!-- Populated by JS: tries iilm-logo.png, falls back to text badge -->
+  </div>
+
+  <h1>The Responsible AI Pledge</h1>
+  <p class="sub">Five honest commitments for how you'll use AI in your coursework. Read each one, tick it if you mean it, then sign below.</p>
+
+  <div class="card">
+
+    <ul class="pledge-list" id="pledgeList">
+      <li class="pledge-item">
+        <label class="pledge-label">
+          <input type="checkbox" class="pledge-check" data-index="0" />
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#4FAE7C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="pledge-text">I will use AI to <b>support</b> my own thinking, not replace it — I stay the primary author of my work.</span>
+        </label>
+      </li>
+      <li class="pledge-item">
+        <label class="pledge-label">
+          <input type="checkbox" class="pledge-check" data-index="1" />
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#4FAE7C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="pledge-text">I will <b>verify</b> every fact, citation, or source AI gives me before I submit it as my own.</span>
+        </label>
+      </li>
+      <li class="pledge-item">
+        <label class="pledge-label">
+          <input type="checkbox" class="pledge-check" data-index="2" />
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#4FAE7C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="pledge-text">I will <b>disclose</b> when and how I used AI, honestly and by default — not only when asked.</span>
+        </label>
+      </li>
+      <li class="pledge-item">
+        <label class="pledge-label">
+          <input type="checkbox" class="pledge-check" data-index="3" />
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#4FAE7C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="pledge-text">I will respect the <b>boundaries</b> each instructor sets for AI use, assignment by assignment.</span>
+        </label>
+      </li>
+      <li class="pledge-item">
+        <label class="pledge-label">
+          <input type="checkbox" class="pledge-check" data-index="4" />
+          <span class="stamp"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#4FAE7C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="pledge-text">I will treat AI mistakes as <b>my responsibility</b> to catch, not an excuse when they slip through.</span>
+        </label>
+      </li>
+    </ul>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" autocomplete="off" placeholder="e.g. Aditi Sharma" />
+      </div>
+      <div class="field">
+        <label for="urnNo">URN No. <span style="opacity:0.55;text-transform:none;font-weight:400;">(optional)</span></label>
+        <input type="text" id="urnNo" autocomplete="off" placeholder="e.g. 2023BBA045" />
+      </div>
+    </div>
+
+    <div class="signature-preview">
+      <span class="ghost live" id="sigPreview">Your signature appears here</span>
+    </div>
+    <p class="signature-caption">Signature preview</p>
+
+    <div class="foot-row">
+      <div class="progress-wrap">
+        <span class="progress" id="progressText"><b>0</b> of 5 pledges checked</span>
+        <div class="progress-bar"><div class="progress-bar-fill" id="progressBarFill"></div></div>
+      </div>
+      <button class="seal-btn" id="sealBtn" disabled>Seal My Pledge</button>
+    </div>
+    <p class="status-msg" id="statusMsg"></p>
+
+    <!-- Sealed confirmation state -->
+    <div class="sealed-overlay" id="sealedOverlay">
+      <div class="seal-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12.5L9.5 18L20 6" stroke="#D4AF6A" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <p class="sealed-title">Pledge sealed</p>
+      <p class="sealed-sub">Your commitment has been recorded. Thank you for engaging honestly with this.</p>
+      <p class="sealed-name" id="sealedName"></p>
+      <button class="reset-link" id="resetLink">Sign as someone else</button>
+    </div>
+
+  </div>
+
+  <footer>
+    Submissions are sent to your instructor's records.<br/>
+    Trouble submitting? Tell your facilitator.
+  </footer>
+
+</div>
+
+<script>
+  // ============================================================
+  // BACKEND CONFIG — read this before deploying to GitHub Pages
+  // ------------------------------------------------------------
+  // GitHub Pages only serves static files, so submissions need an
+  // external endpoint to land somewhere. Easiest options:
+  //
+  //  1) Formspree (fastest, free tier, no code):
+  //     - Create a form at https://formspree.io
+  //     - Copy the endpoint it gives you, e.g.
+  //       "https://formspree.io/f/abcd1234"
+  //     - Paste it below as FORM_ENDPOINT.
+  //
+  //  2) Google Sheets via Apps Script:
+  //     - Write a doPost(e) Web App that appends e.parameter rows
+  //       to a Sheet, deploy it, and paste that /exec URL below.
+  //
+  //  3) Any custom API (Node/Express, etc.) that accepts a JSON
+  //     POST — just point FORM_ENDPOINT at it. Make sure it sends
+  //     back CORS headers (Access-Control-Allow-Origin) since this
+  //     page will be hosted on a github.io domain.
+  //
+  // Until you set a real endpoint, the page runs in DEMO MODE:
+  // it simulates a successful submission locally so you can test
+  // the interaction before the backend is wired up.
+  // ============================================================
+  // NOTE: body is sent as text/plain (see submitPledge below) so it works
+  // with Google Apps Script without a CORS preflight. If you switch to
+  // Formspree instead, change the headers back to
+  // { 'Content-Type': 'application/json', 'Accept': 'application/json' }.
+  const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbz5ouXs4GY9R3ElU4JYD5qApEUU4-v0ax9c8g0T1vMRwvwNom3cbYvXLOTB35cnY3Gy/exec";
+
+  const checks = Array.from(document.querySelectorAll('.pledge-check'));
+  const nameInput = document.getElementById('fullName');
+  const urnInput = document.getElementById('urnNo');
+  const sigPreview = document.getElementById('sigPreview');
+  const progressText = document.getElementById('progressText');
+  const progressBarFill = document.getElementById('progressBarFill');
+  const sealBtn = document.getElementById('sealBtn');
+  const statusMsg = document.getElementById('statusMsg');
+  const sealedOverlay = document.getElementById('sealedOverlay');
+  const sealedName = document.getElementById('sealedName');
+  const resetLink = document.getElementById('resetLink');
+  const logoRow = document.getElementById('logoRow');
+  const cardEl = document.querySelector('.card');
+
+  // Logo: try the real file, fall back to a text badge if it 404s
+  (function loadLogo(){
+    const img = new Image();
+    img.onload = () => { logoRow.innerHTML = ''; logoRow.appendChild(img); };
+    img.onerror = () => {
+      const badge = document.createElement('div');
+      badge.className = 'logo-badge';
+      badge.textContent = 'IILM';
+      logoRow.appendChild(badge);
+    };
+    img.src = 'iilm-logo.png';
+    img.alt = 'IILM University';
+  })();
+
+  function updateProgress(){
+    const checkedCount = checks.filter(c => c.checked).length;
+    progressText.innerHTML = `<b>${checkedCount}</b> of ${checks.length} pledges checked`;
+    progressBarFill.style.width = (checkedCount / checks.length * 100) + '%';
+    validate();
+  }
+
+  function updateSignature(){
+    const name = nameInput.value.trim();
+    if(name){
+      sigPreview.textContent = name;
+      sigPreview.classList.add('live');
+    } else {
+      sigPreview.textContent = 'Your signature appears here';
+      sigPreview.classList.remove('live');
+    }
+    validate();
+  }
+
+  function validate(){
+    const allChecked = checks.every(c => c.checked);
+    const hasName = nameInput.value.trim().length > 0;
+    sealBtn.disabled = !(allChecked && hasName);
+  }
+
+  checks.forEach(c => c.addEventListener('change', updateProgress));
+  nameInput.addEventListener('input', updateSignature);
+  urnInput.addEventListener('input', validate);
+
+  async function submitPledge(){
+    statusMsg.textContent = '';
+    statusMsg.className = 'status-msg';
+    sealBtn.disabled = true;
+    sealBtn.textContent = 'Sealing…';
+
+    const payload = {
+      name: nameInput.value.trim(),
+      urn: urnInput.value.trim(),
+      date: new Date().toISOString(),
+      pledges_accepted: checks.map(c => c.checked),
+      form_id: 't8-ai-pledge'
+    };
+
+    try {
+      if (FORM_ENDPOINT) {
+        // Google Apps Script Web Apps redirect their real response to a
+        // googleusercontent.com URL that doesn't carry CORS headers, so the
+        // browser blocks reading it even when the script ran successfully
+        // and saved the row. mode:'no-cors' stops the browser from trying to
+        // read that blocked response — we can no longer inspect status/ok,
+        // so a fetch that doesn't throw is treated as a successful submit.
+        await fetch(FORM_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+      } else {
+        // DEMO MODE — no backend configured yet
+        await new Promise(r => setTimeout(r, 700));
+        console.log('[demo mode] Would have submitted:', payload);
+      }
+      showSealed(payload.name);
+    } catch (err) {
+      statusMsg.textContent = 'Something went wrong submitting your pledge. Please try again or tell your facilitator.';
+      statusMsg.className = 'status-msg error';
+      sealBtn.disabled = false;
+      sealBtn.textContent = 'Seal My Pledge';
+    }
+  }
+
+  function showSealed(name){
+    sealedName.textContent = '— ' + name;
+    cardEl.classList.add('is-sealed');
+  }
+
+  function resetForm(){
+    checks.forEach(c => c.checked = false);
+    nameInput.value = '';
+    urnInput.value = '';
+    updateProgress();
+    updateSignature();
+    sealBtn.textContent = 'Seal My Pledge';
+    statusMsg.textContent = '';
+    cardEl.classList.remove('is-sealed');
+  }
+
+  sealBtn.addEventListener('click', submitPledge);
+  resetLink.addEventListener('click', resetForm);
+
+  updateProgress();
+  updateSignature();
+</script>
+</body>
+</html>
